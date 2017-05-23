@@ -1,38 +1,49 @@
 // Require spotify and OMDB
-var spotify = require('spotify');
-// var request = require('request');
-// // Grab data from keys.js
-//     var key = require("./keys.js"); 
-// // Store twitter keys 
-//     var twitterInfo = key.twitterKeys; 
-//     console.log(twitterInfo);
+    var spotify = require('spotify');
+    var request = require('request');
+// Grab data from keys.js
+    var key = require("./keys.js"); 
+// Store twitter keys 
+    
 
 // Show last 20 tweets and when they were created in git bash/terminal using my-tweets command
+   if (process.argv[2] == "my-tweets") {
 
+        var myTweets = function () {
+        var client = new Twitter(key.twitterKeys);
+
+        var params = {screen_name: 'nhuyp87_hw', count: 20};
+        client.get('statuses/user_timeline', params, function(error, tweets, response) {
+        
+            var data = []; 
+            
+            if (!error) {
+                console.log(tweets);
+            }
+        });
+    }
+
+   }
     
 // Show artists, song's name, preview link from Spotify and the album that the song is from using spotify-this-sing '<song name here>' 
 
-var songName = process.argv[3].toLowerCase().trim();
 
-console.log(songName); 
 
 if (process.argv[2] == "spotify-this-song") {
 
-        spotify.search({ type: 'track', query: songName, limit: 5 }, function(err, data) {
+        var songName = process.argv[3].toLowerCase().trim();
+
+        console.log(songName); 
+
+        spotify.search({ type: 'track', query: songName, limit: 1 }, function(err, data) {
             if ( err ) {
                 console.log('Error occurred: ' + err);
                 return;
             }
         
             // Do something with 'data'
-                // Artists
-                    console.log(data.album.artists.name); 
-                // Song name 
-                    console.log(data.name); 
-                // Preview link
-                    console.log(data.preview_url); 
-                // Album that the song is from 
-                    console.log(); 
+                console.log(); 
+                
 
         });
 
