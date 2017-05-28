@@ -59,10 +59,8 @@ if (process.argv[2] == "spotify-this-song" && process.argv[3]) {
 
         spotify.search({ type: 'track', query: 'the sign ace of base'}, function(err, data) {
             if (err ) {
-
                 console.log('Error occurred: ' + err);
-                return;     
-                
+                return;                     
             }
                     // Do something with 'data'
                     // console.log(JSON.stringify(data));
@@ -78,8 +76,41 @@ if (process.argv[2] == "spotify-this-song" && process.argv[3]) {
     }
 
 // Show movie title, movie year, IMDB rating of movie, country of origin, movie language, plot, actors, and Rotten Tomatoes URL using movie-this '<movie name here' command 
+var movie = process.argv[3];
+if (process.argv[2] == "movie-this" && process.argv[3]) {
 
-    // If no movie is entered, the program will output data for the movie "Mr. Nobody"
+    request("http://www.omdbapi.com/?apikey=40e9cece&t=" + movie + "&y=&plot=short&r=json", function (error, response, body) {
+        console.log("Title: " + JSON.parse(body).Title);
+        console.log("Year: " + JSON.parse(body).Year);
+        console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+        console.log("Country: " + JSON.parse(body).Country); 
+        console.log("Language: " + JSON.parse(body).Language);
+        console.log("Plot: " + JSON.parse(body).Plot);
+        console.log("Actors: " + JSON.parse(body).Actors);
+        console.log("Rotten Tomatoes URL: " + JSON.parse(body).Website);
+
+    })
+    
+// If no movie is entered, the program will output data for the movie "Mr. Nobody"
+} else if (process.argv[2] == "movie-this" && !process.argv[3]) {
+    movie = "Mr. Nobody";
+    
+    request("http://www.omdbapi.com/?apikey=40e9cece&t=" + movie + "&y=&plot=short&r=json", function (error, response, body) {
+        console.log("Title: " + JSON.parse(body).Title);
+        console.log("Year: " + JSON.parse(body).Year);
+        console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+        console.log("Country: " + JSON.parse(body).Country); 
+        console.log("Language: " + JSON.parse(body).Language);
+        console.log("Plot: " + JSON.parse(body).Plot);
+        console.log("Actors: " + JSON.parse(body).Actors);
+        console.log("Rotten Tomatoes URL: " + JSON.parse(body).Website);
+        })
+
+} else {
+        console.log('error:', error); 
+};
+
+
 
 // Use fs package in Node to take text inside of random.txt to call spotify-this-song for "I Want it That Way"
 
